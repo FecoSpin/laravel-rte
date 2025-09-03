@@ -31,9 +31,12 @@ docker-compose exec app php artisan key:generate
 5. Ejecuta las migraciones:
 
 ```bash
-docker-compose exec app php artisan migrate
+php artisan migrate
 ```
-
+6. Crear modelo, Controlador y migracion
+```bash
+php artisan make:model <nombre> -mcr
+```
 ## Acceso a la aplicación
 
 - **Aplicación web**: http://localhost:8000
