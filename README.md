@@ -72,6 +72,12 @@ curl http://localhost:8000
 
 ## 🏗️ Arquitectura del Proyecto
 
+6. Crear modelo, Controlador y migracion
+```bash
+php artisan make:model <nombre> -mcr
+```
+## Acceso a la aplicación
+=======
 ```
 ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
 │   Nginx:80      │    │  Laravel:9000   │    │   MySQL:3306    │
