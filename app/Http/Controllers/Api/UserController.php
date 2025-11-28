@@ -46,6 +46,15 @@ class UserController extends Controller
         return response()->json($users);
     }
 
+    public function index2()
+    {
+        $users = User::with('zone')
+                    ->withCount(['surveys', 'maintenanceRequests'])
+                    ->get();
+        $users= 'Holamundo';
+        return response()->json($users);
+    }
+
     public function store(Request $request)
     {
         $this->authorize('create', User::class);
@@ -67,7 +76,7 @@ class UserController extends Controller
             'zone_id' => $request->zone_id,
             'active' => $request->get('active', true),
         ]);
-
+        
         return response()->json([
             'message' => 'Usuario creado exitosamente',
             'user' => $user->load('zone'),

@@ -9,10 +9,16 @@ use App\Http\Controllers\Api\RteReportController;
 use App\Http\Controllers\Api\MaintenanceRequestController;
 use App\Http\Controllers\Api\ReportAttachmentController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\FormularioInformeController;
+use App\Http\Controllers\InformeController;
+use App\Http\Middleware\Cors;
+
 
 // Public routes
 Route::post('/auth/login', [AuthController::class, 'login']);
 Route::post('/auth/register', [AuthController::class, 'register']);
+Route::get('/users-test', [UserController::class, 'index2']);
+
 
 // Protected routes
 Route::middleware('auth:sanctum')->group(function () {
@@ -46,6 +52,9 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // RTE Reports
     Route::apiResource('reports', RteReportController::class);
+    
+    // Formulario de Informe
+    Route::post('/formulario-informe', [InformeController::class, 'store'])->middleware('auth:sanctum');
     Route::post('reports/{report}/submit', [RteReportController::class, 'submit']);
     Route::get('reports/{report}/pdf', [RteReportController::class, 'generatePdf']);
     
