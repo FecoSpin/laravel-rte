@@ -33,7 +33,7 @@ class InformeController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
+        
         try {
             // Lógica para guardar el informe
              // Crear el reporte primero

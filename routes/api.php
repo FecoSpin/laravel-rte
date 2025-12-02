@@ -19,9 +19,19 @@ Route::post('/auth/login', [AuthController::class, 'login']);
 Route::post('/auth/register', [AuthController::class, 'register']);
 Route::get('/users-test', [UserController::class, 'index2']);
 
+Route::get('/test-cors', function () {
+    return response()->json(['ok' => true]);
+});
+
 
 // Protected routes
 Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/test-cors', function (\Illuminate\Http\Request $request) {
+        return response()->json([
+            'ok-cors' => true,
+            'method' => $request->method(),
+        ]);
+    });
     // Auth routes
     Route::post('/auth/logout', [AuthController::class, 'logout']);
     Route::get('/auth/user', [AuthController::class, 'user']);
