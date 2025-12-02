@@ -9,6 +9,8 @@ use App\Http\Controllers\Api\RteReportController;
 use App\Http\Controllers\Api\MaintenanceRequestController;
 use App\Http\Controllers\Api\ReportAttachmentController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\ReportFileController;
+use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\FormularioInformeController;
 use App\Http\Controllers\InformeController;
 use App\Http\Middleware\Cors;
@@ -65,6 +67,9 @@ Route::middleware('auth:sanctum')->group(function () {
     
     // Formulario de Informe
     Route::post('/formulario-informe', [InformeController::class, 'store'])->middleware('auth:sanctum');
+    
+    // Subida de archivos de reportes (PDF / imágenes) por usuario y tipo de reporte
+    Route::post('/reportes/{report_type}/upload', [ReportFileController::class, 'store']);
     Route::post('reports/{report}/submit', [RteReportController::class, 'submit']);
     Route::get('reports/{report}/pdf', [RteReportController::class, 'generatePdf']);
     
@@ -76,6 +81,10 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Maintenance Requests
     Route::apiResource('maintenance-requests', MaintenanceRequestController::class);
+
+    // Extended profile (datos del centro de trabajo / RTE)
+    Route::get('/profile-detail', [ProfileController::class, 'show']);
+    Route::put('/profile-detail', [ProfileController::class, 'update']);
     
     // Maintenance request management - Admin and Supervisor only
     Route::middleware('role:admin,supervisor')->group(function () {
