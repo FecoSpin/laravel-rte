@@ -48,6 +48,11 @@ class FormularioInforme extends Model
     {
         return $this->hasMany(CursoEnLinea::class, 'formulario_id');
     }
+
+    public function pdfFiles()
+    {
+        return $this->hasMany(PdfFile::class, 'formulario_informe_id');
+    }
     
 }
 

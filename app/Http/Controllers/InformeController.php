@@ -94,7 +94,7 @@ class InformeController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Informe guardado correctamente',
-                //'data' => $formulario
+                'data' => $formulario
                 
             ], 201);
         } catch (\Exception $e) {

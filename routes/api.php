@@ -13,6 +13,7 @@ use App\Http\Controllers\Api\ReportFileController;
 use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\FormularioInformeController;
 use App\Http\Controllers\InformeController;
+use App\Http\Controllers\PDFController;
 use App\Http\Middleware\Cors;
 
 
@@ -107,7 +108,13 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::put('users/{user}/password', [UserController::class, 'updatePassword']);
     });
 
-    // Dashboard and statistics routes
+    // PDF Download (se genera al vuelo a partir del formulario)
+    Route::prefix('pdf')->group(function () {
+        Route::get('/download/{id}', [PDFController::class, 'downloadPDF'])
+            ->name('pdf.download');
+    });
+
+    // Dashboard stats
     Route::get('/dashboard/stats', function (Request $request) {
         $user = $request->user();
         
