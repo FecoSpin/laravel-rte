@@ -149,12 +149,30 @@ class PDFController extends Controller
         $formulario = FormularioInforme::with([
             'usuario.profile',
             'reporte',
-            'camposFormativos',
+            // Incluir también los grados de cada campo formativo
+            'camposFormativos.grados',
             'proyectosColaborativos',
             'cursosEnLinea'
         ])->findOrFail($id);
 
         $profile = optional($formulario->usuario)->profile;
+
+        // Transformar los datos para la vista (mismos datos que en generarPDF/vistaPreviaPDF)
+        $formulario->camposFormativos->each(function($campo) {
+            // Inicializar contadores para cada grado
+            $grados = [
+                1 => 0, 2 => 0, 3 => 0,
+                4 => 0, 5 => 0, 6 => 0
+            ];
+
+            // Llenar con los valores reales
+            foreach ($campo->grados as $grado) {
+                $grados[$grado->grado] = $grado->cantidad_alumnos;
+            }
+
+            // Agregar propiedades dinámicas al modelo
+            $campo->setAttribute('alumnos_por_grado', $grados);
+        });
 
         // Generar el PDF usando la misma vista del informe
         $pdf = Pdf::loadView('pdf.informe', [
